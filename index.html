@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>分享數位名片</title>
-    <!-- 引入 LINE 官方 LIFF SDK -->
-    <script src="https://line.me"></script>
+    <title>分享名片</title>
+    <!-- 引入 LINE LIFF SDK -->
+    <script src="https://static. liff.line.me/edge/2/sdk.js"></script>
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -17,67 +17,42 @@
             margin: 0;
             background-color: #f4f7f6;
         }
-        .container {
+        .loading-box {
             text-align: center;
-            padding: 30px 20px;
+            padding: 20px;
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            width: 85%;
-            max-width: 320px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .btn-share {
-            background-color: #06C755;
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 25px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(6, 199, 85, 0.3);
-            width: 100%;
-            margin-top: 15px;
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #06C755; /* LINE 綠色 */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
         }
-        .status-text {
-            color: #666;
-            font-size: 15px;
-            margin: 10px 0;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
+        p { color: #333; font-size: 16px; margin: 0; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div id="status" class="status-text">數位名片系統</div>
-        <button class="btn-share" onclick="sendMyCard()">點擊分享我的名片</button>
+    <div class="loading-box">
+        <div class="spinner"></div>
+        <p id="status-text">正在啟動 LINE 分享介面...</p>
     </div>
 
     <script>
-        // 您的專屬 LIFF ID
+        // 🚨 請把下方引號內更換為您在 LINE Developers 取得的 LIFF ID
         const MY_LIFF_ID = '2011294294-wkNx8TPb';
 
-        // 頁面開啟時，單純初始化並強制要求登入
-        liff.init({ liffId: MY_LIFF_ID })
-            .then(() => {
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                } else {
-                    document.getElementById('status').innerText = '系統連線成功！';
-                }
-            })
-            .catch((err) => {
-                document.getElementById('status').innerText = '系統初始化失敗';
-                console.error(err);
-            });
-
-        // 核心分享功能
-        function sendMyCard() {
-            document.getElementById('status').innerText = '正在喚醒 LINE 好友選單...';
-            
-            // 🚨 這裡已經修正為符合 LINE 官方嚴格要求的規範結構！
-            liff.shareTargetPicker([
-                {
+        // 🚨 這裡放入您設計好的名片 Flex Message JSON 內容
+        const FLEX_MESSAGE_CONTENT = {
   "type": "bubble",
   "hero": {
     "type": "image",
@@ -231,21 +206,49 @@
     ],
     "flex": 0
   }
-}
-            ])
-            .then((res) => {
-                if (res) {
-                    document.getElementById('status').innerText = '名片分享成功！';
-                    setTimeout(() => { liff.closeWindow(); }, 1200);
+};
+
+        // 初始化 LIFF
+        liff.init({ liffId: MY_LIFF_ID })
+            .then(() => {
+                // 檢查用戶是否已登入
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                    return;
+                }
+                
+                // 檢查是否支援分享功能
+                if (liff.isApiAvailable('shareTargetPicker')) {
+                    liff.shareTargetPicker([
+                        {
+                            type: "flex",
+                            altText: "您收到了一張數位名片",
+                            contents: FLEX_MESSAGE_CONTENT
+                        }
+                    ])
+                    .then((res) => {
+                        if (res) {
+                            // 使用者成功發送
+                            document.getElementById('status-text').innerText = '分享成功！';
+                        } else {
+                            // 使用者點選取消
+                            document.getElementById('status-text').innerText = '已取消分享';
+                        }
+                        // 延遲 1 秒後自動關閉視窗
+                        setTimeout(() => { liff.closeWindow(); }, 1000);
+                    })
+                    .catch((error) => {
+                        document.getElementById('status-text').innerText = '分享失敗，請稍後再試';
+                        console.error(error);
+                    });
                 } else {
-                    document.getElementById('status').innerText = '您取消了分享';
+                    document.getElementById('status-text').innerText = '您的 LINE 版本不支援此功能';
                 }
             })
-            .catch((error) => {
-                document.getElementById('status').innerText = '分享失敗，格式或權限錯誤';
-                alert('錯誤訊號：' + JSON.stringify(error));
+            .catch((err) => {
+                document.getElementById('status-text').innerText = '連線失敗';
+                console.error('LIFF 初始化失敗', err);
             });
-        }
     </script>
 </body>
 </html>
