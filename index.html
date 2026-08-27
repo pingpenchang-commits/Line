@@ -50,7 +50,6 @@
 
     <div class="container">
         <div id="status" class="status-text">數位名片系統</div>
-        <!-- 點擊直接呼叫分享，不再進行多餘的 API 條件判斷 -->
         <button class="btn-share" onclick="sendMyCard()">點擊分享我的名片</button>
     </div>
 
@@ -58,8 +57,27 @@
         // 您的專屬 LIFF ID
         const MY_LIFF_ID = '2011294294-wkNx8TPb';
 
-        // 符合 LINE 規範的完整名片 JSON
-        const FLEX_MESSAGE_CONTENT = {
+        // 頁面開啟時，單純初始化並強制要求登入
+        liff.init({ liffId: MY_LIFF_ID })
+            .then(() => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                } else {
+                    document.getElementById('status').innerText = '系統連線成功！';
+                }
+            })
+            .catch((err) => {
+                document.getElementById('status').innerText = '系統初始化失敗';
+                console.error(err);
+            });
+
+        // 核心分享功能
+        function sendMyCard() {
+            document.getElementById('status').innerText = '正在喚醒 LINE 好友選單...';
+            
+            // 🚨 這裡已經修正為符合 LINE 官方嚴格要求的規範結構！
+            liff.shareTargetPicker([
+                {
   "type": "bubble",
   "hero": {
     "type": "image",
@@ -213,32 +231,7 @@
     ],
     "flex": 0
   }
-};
-
-        // 頁面開啟時，單純初始化並強制要求登入
-        liff.init({ liffId: MY_LIFF_ID })
-            .then(() => {
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                } else {
-                    document.getElementById('status').innerText = '系統連線成功！';
-                }
-            })
-            .catch((err) => {
-                document.getElementById('status').innerText = '系統初始化失敗';
-                console.error(err);
-            });
-
-        // 核心分享功能：移除所有 IF 檢查，直接強制喚醒 LINE 的分享視窗
-        function sendMyCard() {
-            document.getElementById('status').innerText = '正在喚醒 LINE 好友選單...';
-            
-            liff.shareTargetPicker([
-                {
-                    type: "flex",
-                    altText: "您收到了一張數位名片",
-                    contents: FLEX_MESSAGE_CONTENT
-                }
+}
             ])
             .then((res) => {
                 if (res) {
@@ -249,7 +242,7 @@
                 }
             })
             .catch((error) => {
-                document.getElementById('status').innerText = '分享失敗，請檢查 LINE 後台開關';
+                document.getElementById('status').innerText = '分享失敗，格式或權限錯誤';
                 alert('錯誤訊號：' + JSON.stringify(error));
             });
         }
