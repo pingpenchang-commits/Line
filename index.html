@@ -1,110 +1,202 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分享名片中...</title>
+    <!-- 引入 LINE LIFF SDK -->
+    <script src="https://line-scdn.net"></script>
 </head>
-
 <body>
+    <div style="text-align: center; margin-top: 50px; font-family: sans-serif;">
+        <h2>正在載入 LINE 分享視窗...</h2>
+        <p>若未自動跳出，請稍候或重新點擊。</p>
+    </div>
 
-<script>
-
-async function main() {
-
-  await liff.init({
-    liffId: "2011294294-wkNx8TPb"
-  });
-
-  if (!liff.isLoggedIn()) {
-    liff.login();
-    return;
-  }
-
-  if (!liff.isApiAvailable("shareTargetPicker")) {
-    alert("目前環境無法使用分享功能");
-    return;
-  }
-
-  await liff.shareTargetPicker([
-    {
-      type: "flex",
-      altText: "三久太陽能經銷商電子名片",
-
-      contents: {
-
-        "type": "bubble",
-
-        "body": {
-          "type": "box",
-          "layout": "vertical",
-
-          "contents": [
-
-            {
-              "type": "text",
-              "text": "三久行",
-              "weight": "bold",
-              "size": "xl"
-            },
-
-            {
-              "type": "text",
-              "text": "三久太陽能經銷商",
-              "size": "md",
-              "margin": "md"
-            },
-
-            {
-              "type": "separator",
-              "margin": "lg"
-            },
-
-            {
-              "type": "text",
-              "text": "專業太陽能熱水器",
-              "margin": "lg"
-            },
-
-            {
-              "type": "text",
-              "text": "☎️ 0915-330885",
-              "margin": "md"
-            }
-
-          ]
-        },
-
-        "footer": {
-          "type": "box",
-          "layout": "vertical",
-
-          "contents": [
-
-            {
-              "type": "button",
-              "style": "primary",
-
-              "action": {
-                "type": "uri",
-                "label": "立即聯絡",
-                "uri": "tel:0915330885"
-              }
-            }
-
-          ]
-        }
-
-      }
+    <script>
+        // 1. 初始化 LIFF
+        // 注意：請將下方的 'YOUR_LIFF_ID' 替換為你在步驟四取得的實際 LIFF ID
+        liff.init({ liffId: 'YOUR_LIFF_ID' })
+            .then(() => {
+                // 2. 檢查用戶是否在 LINE 內登入
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                } else {
+                    // 3. 呼叫分享目標選擇器
+                    liff.shareTargetPicker([
+                        // ------ 在下方貼上你的 Flex Message JSON ------
+{
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://developers-resource.landpress.line.me/fx/img/01_1_cafe.png",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "uri",
+      "uri": "https://line.me/"
     }
-  ]);
-
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Brown Cafe",
+        "weight": "bold",
+        "size": "xl"
+      },
+      {
+        "type": "box",
+        "layout": "baseline",
+        "margin": "md",
+        "contents": [
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://developers-resource.landpress.line.me/fx/img/review_gray_star_28.png"
+          },
+          {
+            "type": "text",
+            "text": "4.0",
+            "size": "sm",
+            "color": "#999999",
+            "margin": "md",
+            "flex": 0
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "lg",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Place",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "Flex Tower, 7-7-4 Midori-ku, Tokyo",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Time",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "10:00 - 23:00",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "CALL",
+          "uri": "https://line.me/"
+        }
+      },
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "WEBSITE",
+          "uri": "https://line.me/"
+        }
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "margin": "sm"
+      }
+    ],
+    "flex": 0
+  }
 }
-
-main();
-
-</script>
-
+                        // ------ 在上方貼上你的 Flex Message JSON ------
+                    ])
+                    .then((res) => {
+                        if (res) {
+                            console.log("分享成功！");
+                        } else {
+                            console.log("用戶取消分享");
+                        }
+                        liff.closeWindow(); // 分享完畢或取消後關閉視窗
+                    })
+                    .catch((error) => {
+                        console.error("分享失敗:", error);
+                        alert("分享功能發生錯誤，請稍後再試。");
+                        liff.closeWindow();
+                    });
+                }
+            })
+            .catch((err) => {
+                console.error("LIFF 初始化失敗", err);
+            });
+    </script>
 </body>
 </html>
