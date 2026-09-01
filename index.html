@@ -32,8 +32,7 @@ const flexMessage = {
     altText: "我的電子名片",
 
     contents: {
-
-        "type": "bubble",
+  "type": "bubble",
   "hero": {
     "type": "image",
     "url": "https://developers-resource.landpress.line.me/fx/img/01_1_cafe.png",
@@ -183,6 +182,45 @@ const flexMessage = {
     ],
     "flex": 0
   }
+},
+
+        footer: {
+            type: "box",
+            layout: "vertical",
+            spacing: "sm",
+
+            contents: [
+
+                {
+                    type: "button",
+                    style: "primary",
+                    color: "#06C755",
+
+                    action: {
+                        type: "uri",
+                        label: "查看完整名片",
+
+                        /*
+                         * 點擊後進入你的 LIFF
+                         */
+                        uri: "https://liff.line.me/2011294294-GVhofamg"
+                    }
+                },
+
+                {
+                    type: "button",
+                    style: "link",
+
+                    action: {
+                        type: "uri",
+                        label: "我的網站",
+                        uri: "https://pingpenchang-commits.github.io/Line/"
+                    }
+                }
+
+            ]
+        }
+    }
 };
 
 
@@ -268,4 +306,3 @@ liff.init({
 
 </body>
 </html>
-```
