@@ -24,9 +24,7 @@ ci
                     liff.login();
                 } else {
                     // 3. 呼叫分享目標選擇器
-                    liff.shareTargetPicker([
-                        // ------ 在下方貼上你的 Flex Message JSON ------
-                        {
+                    liff.shareTargetPicker([{
   "type": "bubble",
   "hero": {
     "type": "image",
@@ -178,7 +176,6 @@ ci
     "flex": 0
   }
 }
-                        // ------ 在上方貼上你的 Flex Message JSON ------
                     ])
                     .then((res) => {
                         if (res) {
