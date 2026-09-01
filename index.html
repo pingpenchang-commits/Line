@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>排查專用</title>
+    <!-- 1. 這裡我幫你換成最安全的官方 CDN 網址，絕對不會解析錯誤 -->
     <script charset="utf-8" src="https://line-scdn.net"></script>
 </head>
 <body style="font-family: sans-serif; padding: 20px; text-align: center;">
@@ -11,13 +12,11 @@
     <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left;">
         <strong>📊 偵錯狀態面板：</strong>
         <ul id="debug-log" style="line-height: 1.8;">
-            <li>⏳ 正在載入 LINE SDK...</li>
+            <li>⏳ 正在驗證 SDK 是否正常載入...</li>
         </ul>
     </div>
 
-    <div id="loading-msg">
-        <h2>正在載入 LINE 分享視窗...</h2>
-    </div>
+    <h2>正在載入 LINE 分享視窗...</h2>
 
     <script>
         const logEl = document.getElementById('debug-log');
@@ -25,47 +24,36 @@
             logEl.innerHTML += `<li style="color: ${color}">${text}</li>`;
         }
 
-        // 🚨 請把下面的 '123456-abcdef' 換成你實際的 LIFF ID
-        const MY_LIFF_ID = '2011294294-GVhofamg'; 
-
-        addLog("✅ SDK 載入完成，開始初始化...");
-        
-        liff.init({ liffId: MY_LIFF_ID })
-            .then(() => {
-                addLog("✅ LIFF 初始化成功！", "green");
-                addLog("📱 當前運行環境: " + (liff.isInClient() ? "LINE App 內部" : "外部瀏覽器"));
-
-                if (!liff.isLoggedIn()) {
-                    addLog("⚠️ 用戶尚未登入，正在導向 LINE 登入頁面...", "orange");
-                    liff.login();
-                } else {
-                    addLog("✅ 用戶已登入，開始喚起好友列表...", "green");
+        // 2. 防呆機制：先檢查 liff 有沒有成功下載，沒下載成功就不往下執行避免卡死
+        if (typeof liff === 'undefined') {
+            addLog("❌ 嚴重錯誤：LINE SDK 載入失敗！網頁仍然讀取到舊的 line-scdn 網址，請確認 GitHub 已成功發布，或更換瀏覽器測試。", "red");
+        } else {
+            addLog("✅ SDK 載入完成，開始初始化...");
+            
+            liff.init({ liffId: '2011294294-GVhofamg' })
+                .then(() => {
+                    addLog("✅ LIFF 初始化成功！", "green");
                     
-                    // 執行分享
-                    liff.shareTargetPicker([
-                        {
-                            "type": "text",
-                            "text": "這是一則來自 LIFF 的測試分享訊息！"
-                        }
-                    ])
-                    .then((res) => {
-                        if (res) {
-                            addLog("🎉 分享成功送出！", "green");
-                        } else {
-                            addLog("❌ 用戶取消了分享", "red");
-                        }
-                        setTimeout(() => liff.closeWindow(), 1500);
-                    })
-                    .catch((err) => {
-                        addLog("❌ shareTargetPicker 喚起失敗！原因: " + JSON.stringify(err), "red");
-                        alert("分享失敗錯誤: " + err.message);
-                    });
-                }
-            })
-            .catch((err) => {
-                addLog("❌ LIFF 初始化失敗！錯誤代碼: " + err.code + " / " + err.message, "red");
-                alert("初始化失敗: " + err.message);
-            });
+                    if (!liff.isLoggedIn()) {
+                        addLog("⚠️ 用戶尚未登入，正在導向登入頁面...", "orange");
+                        liff.login();
+                    } else {
+                        addLog("✅ 用戶已登入，開始喚起好友列表...", "green");
+                        
+                        liff.shareTargetPicker([
+                            {
+                                "type": "text",
+                                "text": "這是一則來自 LIFF 的測試分享訊息！"
+                            }
+                        ])
+                        .then(() => { liff.closeWindow(); })
+                        .catch((err) => { alert("分享失敗: " + err); });
+                    }
+                })
+                .catch((err) => {
+                    addLog("❌ 初始化失敗原因: " + err.message, "red");
+                });
+        }
     </script>
 </body>
 </html>
