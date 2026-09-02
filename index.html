@@ -1,15 +1,23 @@
-```html
+
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
     <title>分享電子名片</title>
 
     <!-- LINE LIFF SDK -->
     <script charset="utf-8"
-        src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+        src="https://static.line-scdn.net/liff/edge/2/sdk.js">
+    </script>
+
 </head>
+
 
 <body>
 
@@ -18,231 +26,502 @@
         margin-top:50px;
         font-family:sans-serif;
     ">
+
         <h2>正在開啟 LINE 分享...</h2>
-        <p id="status">請稍候</p>
+
+        <p id="status">
+            請稍候
+        </p>
+
     </div>
 
 
 <script>
 
+
 const LIFF_ID = "2011294294-GVhofamg";
 
 
 /*
- * ============================
+ * =========================================================
  * LINE Flex Message
- * ============================
+ * 電子名片：吳勝雄／清水三久行
+ * =========================================================
  */
 
 const flexMessage = {
 
     type: "flex",
 
-    altText: "我的電子名片",
+    altText: "吳勝雄｜清水三久行｜電子名片",
 
     contents: {
 
         type: "bubble",
-          header: {
-    type: "box",
-    layout: "horizontal",
-    contents: [
-      {
-        type: "text",
-        text: "吳勝雄",
-        align: "center",
-        weight: "bold",
-        size: "xl",
-        margin: "none"
-      }
-    ]
-  },
-        hero: {
-            type: "image",
-            url: "https://i.ibb.co/PzbKytV5/2026-09-02-18-30-04.png",
-            size: "full",
-            aspectRatio: "20:13",
-            aspectMode: "cover",
 
-            action: {
-                type: "uri",
-                uri: "https://line.me/"
-            }
-        },
-
-
-        body: {
+        header: {
 
             type: "box",
+
             layout: "vertical",
 
             contents: [
+
+                /*
+                 * 姓名
+                 */
 
                 {
                     type: "text",
-                    text: "Brown Cafe",
+
+                    text: "吳勝雄",
+
+                    size: "xl",
+
                     weight: "bold",
-                    size: "xl"
+
+                    offsetStart: "md"
                 },
 
 
+                /*
+                 * 職稱
+                 */
+
                 {
-                    type: "box",
-                    layout: "baseline",
-                    margin: "md",
+                    type: "text",
 
-                    contents: [
+                    text: "三久太陽能熱水器-台中海線經銷商",
 
-                        {
-                            type: "icon",
-                            size: "sm",
-                            url: "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
-                        },
+                    size: "md",
 
-                        {
-                            type: "icon",
-                            size: "sm",
-                            url: "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
-                        },
+                    gravity: "bottom",
 
-                        {
-                            type: "icon",
-                            size: "sm",
-                            url: "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
-                        },
+                    offsetBottom: "none",
 
-                        {
-                            type: "icon",
-                            size: "sm",
-                            url: "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
-                        },
+                    offsetTop: "sm",
 
-                        {
-                            type: "icon",
-                            size: "sm",
-                            url: "https://developers-resource.landpress.line.me/fx/img/review_gray_star_28.png"
-                        },
+                    align: "center",
 
-                        {
-                            type: "text",
-                            text: "4.0",
-                            size: "sm",
-                            color: "#999999",
-                            margin: "md",
-                            flex: 0
-                        }
-
-                    ]
+                    color: "#888888"
                 },
 
 
+                /*
+                 * 名片主圖片
+                 */
+
                 {
                     type: "box",
+
                     layout: "vertical",
-                    margin: "lg",
-                    spacing: "sm",
 
                     contents: [
 
                         {
+
+                            type: "image",
+
+                            url:
+                                "https://i.ibb.co/PzbKytV5/2026-09-02-18-30-04.png",
+
+                            size: "full"
+
+                        }
+
+                    ],
+
+                    cornerRadius: "xl",
+
+                    paddingAll: "none",
+
+                    offsetTop: "xs"
+                },
+
+
+                /*
+                 * 公司資訊區
+                 */
+
+                {
+
+                    type: "box",
+
+                    layout: "vertical",
+
+                    contents: [
+
+                        {
+
                             type: "box",
-                            layout: "baseline",
-                            spacing: "sm",
+
+                            layout: "horizontal",
 
                             contents: [
 
                                 {
-                                    type: "text",
-                                    text: "Place",
-                                    color: "#aaaaaa",
-                                    size: "sm",
-                                    flex: 1
+
+                                    type: "image",
+
+                                    url:
+                                        "https://i.ibb.co/Xvc3QYd/SUNCUE.png",
+
+                                    size: "xs",
+
+                                    margin: "none",
+
+                                    align: "start",
+
+                                    offsetStart: "md"
                                 },
 
                                 {
+
                                     type: "text",
-                                    text: "Flex Tower, 7-7-4 Midori-ku, Tokyo",
-                                    wrap: true,
-                                    color: "#666666",
-                                    size: "sm",
-                                    flex: 5
+
+                                    text: "清水三久行",
+
+                                    size: "md",
+
+                                    weight: "bold",
+
+                                    align: "start",
+
+                                    gravity: "center",
+
+                                    offsetEnd: "lg"
+                                },
+
+                                {
+
+                                    type: "text",
+
+                                    text: " "
+
                                 }
 
-                            ]
+                            ],
+
+                            offsetTop: "xs",
+
+                            offsetBottom: "xs",
+
+                            paddingTop: "none"
+                        },
+
+
+                        /*
+                         * 分隔線
+                         */
+
+                        {
+
+                            type: "separator",
+
+                            margin: "none",
+
+                            color: "#FFFFFF"
+                        },
+
+
+                        /*
+                         * 地址
+                         */
+
+                        {
+
+                            type: "text",
+
+                            text:
+                                "Add：台中市清水區高美路49號",
+
+                            offsetStart: "md",
+
+                            offsetEnd: "md",
+
+                            size: "md",
+
+                            weight: "bold",
+
+                            offsetTop: "lg",
+
+                            color: "#666666"
+                        },
+
+
+                        /*
+                         * 電話
+                         */
+
+                        {
+
+                            type: "text",
+
+                            text:
+                                "Tel：0915-330885",
+
+                            offsetStart: "md",
+
+                            size: "md",
+
+                            weight: "bold",
+
+                            offsetTop: "xxl",
+
+                            color: "#666666"
+                        }
+
+                    ],
+
+                    backgroundColor: "#CCEEFF",
+
+                    borderColor: "#FFFFFF",
+
+                    cornerRadius: "15px",
+
+                    paddingBottom: "32px",
+
+                    offsetBottom: "none"
+                },
+
+
+                /*
+                 * =================================================
+                 * 聯絡／官方網站按鈕
+                 * =================================================
+                 */
+
+                {
+
+                    type: "box",
+
+                    layout: "horizontal",
+
+                    contents: [
+
+                        {
+
+                            type: "button",
+
+                            action: {
+
+                                type: "uri",
+
+                                label: "聯繫我們",
+
+                                uri: "tel:0915330885"
+
+                            },
+
+                            style: "primary",
+
+                            color: "#003377",
+
+                            margin: "none",
+
+                            gravity: "center"
                         },
 
 
                         {
-                            type: "box",
-                            layout: "baseline",
-                            spacing: "sm",
 
-                            contents: [
+                            type: "button",
 
-                                {
-                                    type: "text",
-                                    text: "Time",
-                                    color: "#aaaaaa",
-                                    size: "sm",
-                                    flex: 1
-                                },
+                            action: {
 
-                                {
-                                    type: "text",
-                                    text: "10:00 - 23:00",
-                                    wrap: true,
-                                    color: "#666666",
-                                    size: "sm",
-                                    flex: 5
-                                }
+                                type: "uri",
 
-                            ]
+                                label: "官方網站",
+
+                                uri:
+                                    "https://suncue72.wordpress.com/"
+
+                            },
+
+                            style: "primary",
+
+                            color: "#220088",
+
+                            margin: "md",
+
+                            gravity: "center"
                         }
 
-                    ]
-                }
+                    ],
 
-            ]
-        },
+                    offsetTop: "md",
 
-
-        footer: {
-
-            type: "box",
-            layout: "vertical",
-            spacing: "sm",
-
-            contents: [
-
-                {
-                    type: "button",
-                    style: "link",
-
-                    action: {
-                        type: "uri",
-                        label: "CALL",
-                        uri: "https://liff.line.me/2011294294-GVhofamg"
-                    },
-
-                    height: "sm"
-                },
-
-
-                {
-                    type: "button",
-                    style: "link",
-                    height: "sm",
-
-                    action: {
-                        type: "uri",
-                        label: "WEBSITE",
-                        uri: "https://line.me/"
-                    }
+                    margin: "none"
                 }
 
             ],
 
-            flex: 0
+            paddingTop: "lg"
+        },
+
+
+        /*
+         * =========================================================
+         * Body
+         * =========================================================
+         */
+
+        body: {
+
+            type: "box",
+
+            layout: "horizontal",
+
+            contents: [
+
+                {
+
+                    type: "box",
+
+                    layout: "horizontal",
+
+                    contents: [
+
+                        /*
+                         * 分享圖示
+                         */
+
+                        {
+
+                            type: "image",
+
+                            url:
+                                "https://i.ibb.co/3YPf9FMZ/share.png",
+
+                            size: "36px",
+
+                            gravity: "center",
+
+                            align: "end",
+
+                            margin: "none",
+
+                            action: {
+
+                                type: "uri",
+
+                                label: "action",
+
+                                uri:
+                                    "https://liff.line.me/2011294294-GVhofamg"
+
+                            }
+
+                        },
+
+
+                        /*
+                         * 分享名片文字
+                         */
+
+                        {
+
+                            type: "text",
+
+                            text: "分享名片",
+
+                            gravity: "center",
+
+                            offsetStart: "none",
+
+                            size: "md",
+
+                            weight: "bold",
+
+                            margin: "none",
+
+                            offsetEnd: "100px",
+
+                            align: "start"
+                        }
+
+                    ],
+
+                    margin: "none",
+
+                    spacing: "none"
+                },
+
+
+                /*
+                 * SUNCUE Logo
+                 */
+
+                {
+
+                    type: "image",
+
+                    url:
+                        "https://i.ibb.co/Xvc3QYd/SUNCUE.png",
+
+                    size: "sm",
+
+                    gravity: "center",
+
+                    align: "center",
+
+                    margin: "none",
+
+                    offsetEnd: "md"
+                }
+
+            ],
+
+            paddingAll: "none",
+
+            offsetBottom: "none",
+
+            offsetEnd: "none",
+
+            paddingTop: "none",
+
+            paddingEnd: "none",
+
+            borderWidth: "none",
+
+            offsetTop: "none",
+
+            offsetStart: "none",
+
+            paddingBottom: "none",
+
+            paddingStart: "none",
+
+            margin: "none",
+
+            spacing: "none",
+
+            height: "45px"
+        },
+
+
+        /*
+         * =========================================================
+         * Styles
+         * =========================================================
+         */
+
+        styles: {
+
+            hero: {
+
+                separatorColor: "#DDDDDD",
+
+                separator: false
+            },
+
+            body: {
+
+                separatorColor: "#DDDDDD",
+
+                separator: true
+            }
+
         }
 
     }
@@ -251,25 +530,35 @@ const flexMessage = {
 
 
 /*
- * ============================
+ * =========================================================
  * 初始化 LIFF
- * ============================
+ * =========================================================
  */
 
 liff.init({
+
     liffId: LIFF_ID
+
 })
 
 .then(() => {
 
-    console.log("LIFF 初始化成功");
 
-    document.getElementById("status").innerText =
+    console.log(
+        "LIFF 初始化成功"
+    );
+
+
+    document.getElementById(
+        "status"
+    ).innerText =
         "正在開啟分享對象選擇器...";
 
 
     /*
+     * =====================================================
      * 檢查登入
+     * =====================================================
      */
 
     if (!liff.isLoggedIn()) {
@@ -281,11 +570,15 @@ liff.init({
 
 
     /*
+     * =====================================================
      * 開啟 LINE 分享對象選擇器
+     * =====================================================
      */
 
     return liff.shareTargetPicker([
+
         flexMessage
+
     ]);
 
 })
@@ -293,42 +586,72 @@ liff.init({
 
 .then((result) => {
 
+
     /*
      * 如果前一步因為 liff.login()
      * 而沒有執行分享，就不要繼續處理
      */
 
     if (result === null) {
+
         return;
     }
 
 
+    /*
+     * =====================================================
+     * 使用者取消
+     * =====================================================
+     */
+
     if (!result) {
 
-        console.log("使用者取消分享");
+        console.log(
+            "使用者取消分享"
+        );
 
-        document.getElementById("status").innerText =
+
+        document.getElementById(
+            "status"
+        ).innerText =
             "已取消分享";
 
         return;
     }
 
 
-    console.log("分享成功");
+    /*
+     * =====================================================
+     * 分享成功
+     * =====================================================
+     */
 
-    document.getElementById("status").innerText =
+    console.log(
+        "分享成功"
+    );
+
+
+    document.getElementById(
+        "status"
+    ).innerText =
         "分享成功！";
 
 
     /*
+     * =====================================================
      * 分享完成後關閉 LIFF
+     * =====================================================
      */
 
     setTimeout(() => {
 
+
         if (liff.isInClient()) {
+
             liff.closeWindow();
+
         }
+
 
     }, 800);
 
@@ -337,20 +660,42 @@ liff.init({
 
 .catch((error) => {
 
-    console.error("LIFF 錯誤:", error);
 
-    document.getElementById("status").innerText =
+    /*
+     * =====================================================
+     * 錯誤處理
+     * =====================================================
+     */
+
+    console.error(
+        "LIFF 錯誤:",
+        error
+    );
+
+
+    document.getElementById(
+        "status"
+    ).innerText =
         "發生錯誤，請查看 Console";
 
+
     alert(
+
         "LINE 分享發生錯誤：\n\n" +
-        (error.message || error)
+
+        (
+            error.message ||
+            error
+        )
+
     );
 
 });
 
+
 </script>
 
 </body>
+
 </html>
-```
+
