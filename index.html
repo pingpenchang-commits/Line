@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -11,6 +12,7 @@
 </head>
 
 <body>
+
     <div style="
         text-align:center;
         margin-top:50px;
@@ -20,63 +22,119 @@
         <p id="status">請稍候</p>
     </div>
 
+
 <script>
 
 const LIFF_ID = "2011294294-GVhofamg";
 
+
 /*
- * 電子名片
+ * ============================
+ * LINE Flex Message
+ * ============================
  */
+
 const flexMessage = {
+
     type: "flex",
+
     altText: "我的電子名片",
 
     contents: {
 
         type: "bubble",
-
-        size: "mega",
-
+          header: {
+    type: "box",
+    layout: "horizontal",
+    contents: [
+      {
+        type: "text",
+        text: "吳勝雄",
+        align: "center",
+        weight: "bold",
+        size: "xl",
+        margin: "none"
+      }
+    ]
+  },
         hero: {
             type: "image",
-
-            /*
-             * 先使用 LINE 官方圖片測試
-             * 之後可以換成你的照片
-             */
             url: "https://developers-resource.landpress.line.me/fx/img/01_1_cafe.png",
-
             size: "full",
             aspectRatio: "20:13",
-            aspectMode: "cover"
+            aspectMode: "cover",
+
+            action: {
+                type: "uri",
+                uri: "https://line.me/"
+            }
         },
 
+
         body: {
+
             type: "box",
             layout: "vertical",
-            spacing: "md",
 
             contents: [
 
                 {
                     type: "text",
-                    text: "陳先生",
+                    text: "Brown Cafe",
                     weight: "bold",
-                    size: "xl",
-                    color: "#222222"
+                    size: "xl"
                 },
 
-                {
-                    type: "text",
-                    text: "電子名片",
-                    size: "sm",
-                    color: "#888888"
-                },
 
                 {
-                    type: "separator",
-                    margin: "lg"
+                    type: "box",
+                    layout: "baseline",
+                    margin: "md",
+
+                    contents: [
+
+                        {
+                            type: "icon",
+                            size: "sm",
+                            url: "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
+                        },
+
+                        {
+                            type: "icon",
+                            size: "sm",
+                            url: "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
+                        },
+
+                        {
+                            type: "icon",
+                            size: "sm",
+                            url: "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
+                        },
+
+                        {
+                            type: "icon",
+                            size: "sm",
+                            url: "https://developers-resource.landpress.line.me/fx/img/review_gold_star_28.png"
+                        },
+
+                        {
+                            type: "icon",
+                            size: "sm",
+                            url: "https://developers-resource.landpress.line.me/fx/img/review_gray_star_28.png"
+                        },
+
+                        {
+                            type: "text",
+                            text: "4.0",
+                            size: "sm",
+                            color: "#999999",
+                            margin: "md",
+                            flex: 0
+                        }
+
+                    ]
                 },
+
 
                 {
                     type: "box",
@@ -89,78 +147,67 @@ const flexMessage = {
                         {
                             type: "box",
                             layout: "baseline",
+                            spacing: "sm",
 
                             contents: [
+
                                 {
                                     type: "text",
-                                    text: "電話",
+                                    text: "Place",
+                                    color: "#aaaaaa",
                                     size: "sm",
-                                    color: "#888888",
-                                    flex: 2
+                                    flex: 1
                                 },
+
                                 {
                                     type: "text",
-                                    text: "0912-345-678",
+                                    text: "Flex Tower, 7-7-4 Midori-ku, Tokyo",
+                                    wrap: true,
+                                    color: "#666666",
                                     size: "sm",
-                                    color: "#333333",
-                                    flex: 5,
-                                    wrap: true
+                                    flex: 5
                                 }
+
                             ]
                         },
+
 
                         {
                             type: "box",
                             layout: "baseline",
+                            spacing: "sm",
 
                             contents: [
-                                {
-                                    type: "text",
-                                    text: "Email",
-                                    size: "sm",
-                                    color: "#888888",
-                                    flex: 2
-                                },
-                                {
-                                    type: "text",
-                                    text: "example@email.com",
-                                    size: "sm",
-                                    color: "#333333",
-                                    flex: 5,
-                                    wrap: true
-                                }
-                            ]
-                        },
 
-                        {
-                            type: "box",
-                            layout: "baseline",
-
-                            contents: [
                                 {
                                     type: "text",
-                                    text: "公司",
+                                    text: "Time",
+                                    color: "#aaaaaa",
                                     size: "sm",
-                                    color: "#888888",
-                                    flex: 2
+                                    flex: 1
                                 },
+
                                 {
                                     type: "text",
-                                    text: "ABC 科技有限公司",
+                                    text: "10:00 - 23:00",
+                                    wrap: true,
+                                    color: "#666666",
                                     size: "sm",
-                                    color: "#333333",
-                                    flex: 5,
-                                    wrap: true
+                                    flex: 5
                                 }
+
                             ]
                         }
 
                     ]
                 }
+
             ]
         },
 
+
         footer: {
+
             type: "box",
             layout: "vertical",
             spacing: "sm",
@@ -169,40 +216,46 @@ const flexMessage = {
 
                 {
                     type: "button",
-                    style: "primary",
-                    color: "#06C755",
-
-                    action: {
-                        type: "uri",
-                        label: "查看完整名片",
-
-                        /*
-                         * 點擊後進入你的 LIFF
-                         */
-                        uri: "https://liff.line.me/2011294294-GVhofamg"
-                    }
-                },
-
-                {
-                    type: "button",
                     style: "link",
 
                     action: {
                         type: "uri",
-                        label: "我的網站",
-                        uri: "https://pingpenchang-commits.github.io/Line/"
+                        label: "CALL",
+                        uri: "https://liff.line.me/2011294294-GVhofamg"
+                    },
+
+                    height: "sm"
+                },
+
+
+                {
+                    type: "button",
+                    style: "link",
+                    height: "sm",
+
+                    action: {
+                        type: "uri",
+                        label: "WEBSITE",
+                        uri: "https://line.me/"
                     }
                 }
 
-            ]
+            ],
+
+            flex: 0
         }
+
     }
+
 };
 
 
 /*
+ * ============================
  * 初始化 LIFF
+ * ============================
  */
+
 liff.init({
     liffId: LIFF_ID
 })
@@ -216,28 +269,42 @@ liff.init({
 
 
     /*
-     * 確認登入
+     * 檢查登入
      */
+
     if (!liff.isLoggedIn()) {
 
         liff.login();
 
-        return;
+        return null;
     }
 
 
     /*
-     * 分享電子名片
+     * 開啟 LINE 分享對象選擇器
      */
+
     return liff.shareTargetPicker([
         flexMessage
     ]);
 
 })
 
+
 .then((result) => {
 
+    /*
+     * 如果前一步因為 liff.login()
+     * 而沒有執行分享，就不要繼續處理
+     */
+
+    if (result === null) {
+        return;
+    }
+
+
     if (!result) {
+
         console.log("使用者取消分享");
 
         document.getElementById("status").innerText =
@@ -246,14 +313,17 @@ liff.init({
         return;
     }
 
+
     console.log("分享成功");
 
     document.getElementById("status").innerText =
         "分享成功！";
 
+
     /*
-     * 延遲關閉
+     * 分享完成後關閉 LIFF
      */
+
     setTimeout(() => {
 
         if (liff.isInClient()) {
@@ -263,6 +333,7 @@ liff.init({
     }, 800);
 
 })
+
 
 .catch((error) => {
 
@@ -282,3 +353,4 @@ liff.init({
 
 </body>
 </html>
+```
